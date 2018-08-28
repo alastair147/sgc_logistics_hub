@@ -5,12 +5,13 @@ require_once("common/sqlconnect.php");
 
 
 //$job = "1";
-$id = $_GET['id'];;
+$id = $_GET['id'];
 
 //SQL Query
-$sql = "SELECT id, username, date, pickup_city, destination_city, pickup_company, destination_company, distance, convoy, cargo, weight, potential_income, total_income, total_damage, notes FROM user_jobs WHERE id=$id";
-$result = $conn->query($sql);
-$row = $result->fetch_assoc();
+$sql = $conn->prepare("SELECT id, username, date, pickup_city, destination_city, pickup_company, destination_company, distance, convoy, cargo, weight, potential_income, total_income, total_damage, notes FROM user_jobs WHERE id = ?");
+$sql->bindParam(1, $id);
+$sql->execute();
+$row = $sql->fetch_assoc();
 $username = $row["username"];
 $d = $row["date"];
 $pcity = $row["pickup_city"];
@@ -22,6 +23,7 @@ $convoy = $row["convoy"];
 $cargo = $row["cargo"];
 $weight = $row["weight"];
 $pincome = $row["potential_income"];
+
 $tincome = $row["total_income"];
 $tdamage = $row["total_damage"];
 $notes = $row["notes"];
