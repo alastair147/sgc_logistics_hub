@@ -16,7 +16,7 @@ require_once("common/jobselector.php");?>
 
 <body class="">
   <div class="wrapper ">
-    <div class="sidebar" data-color="purple" data-background-color="white">
+    <div class="sidebar" data-color="green" data-background-color="white">
       <!--
         Tip 1: You can change the color of the sidebar using: data-color="purple | azure | green | orange | danger"
 
@@ -36,7 +36,7 @@ require_once("common/jobselector.php");?>
             </a>
           </li>
           <li class="nav-item">
-              <a class="nav-link" href="#0">
+              <a class="nav-link" href="downloads.php">
                   <i class="material-icons">get_app</i>
                   <p>Downloads</p>
                 </a>
