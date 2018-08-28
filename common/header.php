@@ -41,5 +41,19 @@ $footer = "<footer class=\"footer\">
                   </div>
                 </div>
               </footer>";
+
+class Popup
+{
+    private $delete = null;
+    public function Pop() {
+        try{
+            $message = "Row Deleted";
+            echo "<script type='text/javascript'>alert('$message');</script>";
+        }catch(Exception $e){
+            echo "ERROR";
+            return null;
+        }
+    }
+}
 ?>
 

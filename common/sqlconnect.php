@@ -1,18 +1,14 @@
 <?php
-$host = "localhost";
-$userName = "root";
-$password = "";
-$dbName = "sgc_hub";
-$rowsPerPage = 15;
-$pageNum = 1;
-$offset = ($pageNum - 1) * $rowsPerPage;
 
-
-// Create database connection
-$conn = new mysqli($host, $userName, $password, $dbName);
-
-// Check connection
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
+class Connection
+{
+    private $connection = null;
+    public function getConnection(){
+        try{
+            return new PDO("mysql:host=localhost;dbname=sgc_hub", 'root', '');
+        }catch(Exception $e){
+            echo "Can't connect to DATABASE!";
+            return null;
+        }
+    }
 }
-?>

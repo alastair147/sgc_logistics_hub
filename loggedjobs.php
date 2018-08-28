@@ -115,41 +115,53 @@ require_once("common/sqlconnect.php");?>
                                 <div class="card-body">
                                     <div class="table-responsive">
                                             <?php
-                                            $sql = "SELECT id, username, pickup_city, destination_city, cargo FROM user_jobs";
-                                            $result = $conn->query($sql);
-                                            if ($result->num_rows > 0) {
+                                            $connection = new Connection();
+                                            $conn = $connection->getConnection();
+
+                                            $sql = $conn->prepare("SELECT id, date, username, pickup_city, destination_city, cargo FROM user_jobs");
+                                            $sql->execute();
+                                            $result = $sql->fetchAll();
+
+                                            if ($sql->rowCount() > 0) {
                                                 echo "                                            <table class=\"table\">
                                             <thead class=\" text-primary\">
                                             <th>
                                                 ID:
                                             </th>
                                             <th>
+                                                Date: 
+                                            </th>
+                                            <th>
                                                 User: 
                                             </th>
                                             <th>
-                                                Pickup
+                                                Pickup:
                                             </th>
                                             <th>
-                                                Destination
+                                                Destination:
                                             </th>
                                             <th>
-                                                Cargo
+                                                Cargo:
                                             </th>
                                             <th>
-                                                Delete
+                                                View Job:
+                                            </th>
+                                            <th>
+                                                Delete:
                                             </th>
                                             </thead>
                                             <tbody>";
                                                 // output data of each row
-                                                while($row = $result->fetch_assoc()) {
-                                                    echo "<tr><td>".$row["id"]."</td><td>".$row["username"]."</td><td>".$row["pickup_city"]."</td><td>".$row["destination_city"]."</td><td>".$row["cargo"]."</td><td><a href='common/deletejob.php?id={$row['id']}'>Delete</a></td>";
+                                                foreach ($result as $row) {
+                                                    echo "<tr><td>".$row["id"]."</td><td>".$row["date"]."</td><td>".$row["username"]."</td><td>".$row["pickup_city"]."</td><td>".$row["destination_city"]."</td><td>".$row["cargo"]."</td><td><a href='viewjob.php?id={$row['id']}'>View Job</a></td><td><a href='common/deletejob.php?id={$row['id']}'>Delete</a></td>";
                                                 }
                                                 echo "</tr>";
                                                 echo "</table>";
+                                                echo $_SERVER['HTTP_REFERER'];
                                             } else {
                                                 echo "0 results";
                                             }
-                                            $conn->close();
+                                            return null;
                                             ?>
 
                                             </tbody>

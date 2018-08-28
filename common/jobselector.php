@@ -1,6 +1,8 @@
 <?php
 //Requirements
 require_once("common/sqlconnect.php");
+$connection = new Connection();
+$conn = $connection->getConnection();
 
 
 
@@ -11,7 +13,8 @@ $id = $_GET['id'];
 $sql = $conn->prepare("SELECT id, username, date, pickup_city, destination_city, pickup_company, destination_company, distance, convoy, cargo, weight, potential_income, total_income, total_damage, notes FROM user_jobs WHERE id = ?");
 $sql->bindParam(1, $id);
 $sql->execute();
-$row = $sql->fetch_assoc();
+$row = $sql->fetch();
+
 $username = $row["username"];
 $d = $row["date"];
 $pcity = $row["pickup_city"];

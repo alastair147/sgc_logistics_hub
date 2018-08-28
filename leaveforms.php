@@ -1,7 +1,18 @@
 <!doctype html>
 <html lang="en">
 <?php require('common/header.php');
-require_once("common/sqlconnect.php");?>
+require_once("common/sqlconnect.php");
+$url = "http://localhost/sgc/loggedjobs.php";
+
+if ($_SERVER['HTTP_REFERER'] == $url) {
+    $message = "Row Deleted";
+    echo "<script type='text/javascript'>alert('$message');</script>";
+}
+else{
+    echo "test";
+}
+
+?>
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
@@ -80,7 +91,7 @@ require_once("common/sqlconnect.php");?>
       <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">
         <div class="container-fluid">
           <div class="navbar-wrapper">
-            <a class="navbar-brand" href="#pablo">SGC Submitted Leave Forms</a>
+            <a class="navbar-brand" href="#pablo">SGC Submitted Leave Forms </a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
             <span class="sr-only">Toggle navigation</span>
@@ -115,11 +126,15 @@ require_once("common/sqlconnect.php");?>
                                     <div class="card-body">
                                         <div class="table-responsive">
                                                 <?php
-                                                $sql = "SELECT id, username, date, leaving, reason FROM loa";
-                                                $result = $conn->query($sql);
+                                                $connection = new Connection();
+                                                $conn = $connection->getConnection();
 
-                                                if ($result->num_rows > 0) {
-                                                    echo "                                            <table class=\"table\">
+                                                $sql = $conn->prepare("SELECT id, username, date, leaving, reason FROM loa");
+                                                $sql->execute();
+                                                $result = $sql->fetchAll();
+
+                                                if ($sql->rowCount() > 0) {
+                                                    echo "<table class=\"table\">
                                                 <thead class=\" text-primary\">
                                                 <th>
                                                     Name:
@@ -139,14 +154,14 @@ require_once("common/sqlconnect.php");?>
                                                 </thead>
                                                 <tbody>";
                                                     // output data of each row
-                                                    while($row = $result->fetch_assoc()) {
+                                                    foreach ($result as $row) {
                                                         echo "<tr><td>".$row["username"]."</td><td>".$row["date"]."</td><td>".$row["leaving"]."</td><td>".$row["reason"]."</td><td><a href='common/deleteloaform.php?id={$row['id']}'>Delete</a></td>";
                                                     }
                                                     echo "</tr></table>";
                                                 } else {
                                                     echo "0 results";
                                                 }
-                                                $conn->close();
+                                                return null;
                                                 ?>
 
                                                 </tbody>
