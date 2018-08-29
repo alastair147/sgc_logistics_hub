@@ -1,7 +1,18 @@
 <!doctype html>
 <html lang="en">
 <?php require('common/header.php');
-require_once("common/sqlconnect.php");?>
+require_once("common/sqlconnect.php");
+$url = "http://localhost/sgc/loggedjobs.php";
+
+if ($_SERVER['HTTP_REFERER'] == $url) {
+    $message = "Job Deleted";
+    echo "<script type='text/javascript'>alert('$message');</script>";
+}
+else{
+    echo "test";
+}
+
+?>
 <head>
   <meta charset="utf-8" />
   <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">

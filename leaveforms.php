@@ -2,10 +2,10 @@
 <html lang="en">
 <?php require('common/header.php');
 require_once("common/sqlconnect.php");
-$url = "http://localhost/sgc/loggedjobs.php";
+$url = "http://localhost/sgc/leaveforms.php";
 
 if ($_SERVER['HTTP_REFERER'] == $url) {
-    $message = "Row Deleted";
+    $message = "Leave Form Deleted";
     echo "<script type='text/javascript'>alert('$message');</script>";
 }
 else{
